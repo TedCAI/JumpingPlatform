@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlatformStop : MonoBehaviour {
 
@@ -18,5 +19,6 @@ public class PlatformStop : MonoBehaviour {
 		other.rigidbody.velocity = new Vector3 (0, 0, 0);
 		other.transform.position = new Vector3 (transform.parent.position.x, other.transform.position.y, transform.parent.position.z);
 		Destroy (gameObject);
+		GameObject.Find ("FrontBar").GetComponent<Image> ().fillAmount = 0f;
 	}
 }

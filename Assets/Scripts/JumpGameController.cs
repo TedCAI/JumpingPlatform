@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class JumpGameController : MonoBehaviour {
 
 	float jumpHeight;
 	public Transform[] platforms;
+	Image energy;
+	float percentage;
 
 	bool mouseDown;
 
@@ -14,6 +17,8 @@ public class JumpGameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//jumpHeight = 3f;
+		energy = GameObject.Find ("FrontBar").GetComponent<Image> ();
+		energy.fillAmount = 0f;
 		jumpHeight = 0f;
 		i = 1;
 		numberOfPlat = platforms.Length;
@@ -23,7 +28,7 @@ public class JumpGameController : MonoBehaviour {
 	
 	void Update(){
 		if (i < numberOfPlat) {
-			
+			energyBar();
 			distance = platforms [i].position - platforms [i-1].position;
 			Debug.Log(distance);
 
@@ -50,6 +55,11 @@ public class JumpGameController : MonoBehaviour {
 		i++;
 		jumpHeight = 0f;
 		mouseDown = false;
+	}
+
+	void energyBar(){
+		percentage = jumpHeight / 5f;
+		energy.fillAmount = percentage;
 	}
 	/*
 	void FixedUpdate () {
