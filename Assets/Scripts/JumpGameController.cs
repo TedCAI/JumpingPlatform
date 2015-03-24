@@ -10,6 +10,7 @@ public class JumpGameController : MonoBehaviour {
 	float percentage;
 
 	bool mouseDown;
+	public bool isJumping;
 
 	Vector3 distance;
 	int numberOfPlat;
@@ -30,9 +31,13 @@ public class JumpGameController : MonoBehaviour {
 		if (i < numberOfPlat) {
 			energyBar();
 			distance = platforms [i].position - platforms [i-1].position;
-			Debug.Log(distance);
+			//Debug.Log(distance);
+			//Debug.Log(transform.position.z );
+			if(Input.GetMouseButtonDown(0) && !isJumping){
+				mouseDown = true;
+			}
 
-			if(Input.GetMouseButton(0)){
+			if(Input.GetMouseButton(0) && mouseDown && !isJumping){
 				mousePress();
 			}
 
@@ -44,12 +49,13 @@ public class JumpGameController : MonoBehaviour {
 	}
 
 	void mousePress(){
-		mouseDown = true;
+		//mouseDown = true;
 		jumpHeight += 0.01f;
-		Debug.Log(jumpHeight);
+		//Debug.Log(jumpHeight);
 	}
 
 	void mouseRelease(){
+		isJumping = true;
 		rigidbody.velocity = new Vector3 (0, Mathf.Sqrt (-2.0f * Physics.gravity.y*jumpHeight ), 0)+ 
 			new Vector3 (Mathf.Sqrt (Mathf.Abs(distance.x))* Mathf.Sign(distance.x), Mathf.Sqrt (Mathf.Abs(distance.y))*Mathf.Sign(distance.y), Mathf.Sqrt (Mathf.Abs(distance.z))*Mathf.Sign(distance.z));
 		i++;
