@@ -8,13 +8,16 @@ public class JumpGameController : MonoBehaviour {
 	public Transform[] platforms;
 	Image energy;
 	float percentage;
+	public Text timer;
+
+	float startTime;
 
 	bool mouseDown;
 	public bool isJumping;
 
 	Vector3 distance;
 	int numberOfPlat;
-	int i;
+	public int i;
 	// Use this for initialization
 	void Start () {
 		//jumpHeight = 3f;
@@ -25,9 +28,11 @@ public class JumpGameController : MonoBehaviour {
 		numberOfPlat = platforms.Length;
 
 		distance = new Vector3 (0, 0, 0);
+		startTime = Time.time;
 	}
 	
 	void Update(){
+		timer.text = (Time.time - startTime).ToString("F2");
 		if (i < numberOfPlat) {
 			energyBar();
 			distance = platforms [i].position - platforms [i-1].position;
@@ -41,7 +46,7 @@ public class JumpGameController : MonoBehaviour {
 				mousePress();
 			}
 
-			if (Input.GetMouseButtonUp (0) && mouseDown) {
+			if ((Input.GetMouseButtonUp (0) || jumpHeight >= 5f) && mouseDown) {
 				mouseRelease();
 
 			}
@@ -56,8 +61,13 @@ public class JumpGameController : MonoBehaviour {
 
 	void mouseRelease(){
 		isJumping = true;
-		rigidbody.velocity = new Vector3 (0, Mathf.Sqrt (-2.0f * Physics.gravity.y*jumpHeight ), 0)+ 
-			new Vector3 (Mathf.Sqrt (Mathf.Abs(distance.x))* Mathf.Sign(distance.x), Mathf.Sqrt (Mathf.Abs(distance.y))*Mathf.Sign(distance.y), Mathf.Sqrt (Mathf.Abs(distance.z))*Mathf.Sign(distance.z));
+		Vector3 cameraDirection = Camera.main.transform.forward;
+		Vector3 jumpingDistance = new Vector3 (0, Mathf.Sqrt (-2.0f * Physics.gravity.y * 5f), 0) + 5f * cameraDirection;
+				//new Vector3 (Mathf.Sqrt (Mathf.Abs(distance.x))* Mathf.Sign(distance.x), Mathf.Sqrt (Mathf.Abs(distance.y))*Mathf.Sign(distance.y), Mathf.Sqrt (Mathf.Abs(distance.z))*Mathf.Sign(distance.z));
+		//rigidbody.velocity = new Vector3 (0, Mathf.Sqrt (-2.0f * Physics.gravity.y*jumpHeight ), 0)+ 
+		//	new Vector3 (Mathf.Sqrt (Mathf.Abs(distance.x))* Mathf.Sign(distance.x), Mathf.Sqrt (Mathf.Abs(distance.y))*Mathf.Sign(distance.y), Mathf.Sqrt (Mathf.Abs(distance.z))*Mathf.Sign(distance.z));
+		rigidbody.velocity = percentage * jumpingDistance;
+
 		i++;
 		jumpHeight = 0f;
 		mouseDown = false;

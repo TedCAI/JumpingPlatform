@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\CanvasRotation.cs" />
+     <Compile Include="Assets\FirstPlatform.cs" />
      <Compile Include="Assets\Moonlight\DebugUtils.cs" />
      <Compile Include="Assets\Moonlight\GameUtils.cs" />
      <Compile Include="Assets\Moonlight\InputControl.cs" />
@@ -80,6 +81,7 @@
      <Compile Include="Assets\OVR\Scripts\OVRVisionGuide.cs" />
      <Compile Include="Assets\OVR\Scripts\OVRVolumeControl.cs" />
      <Compile Include="Assets\Reload.cs" />
+     <Compile Include="Assets\SceneFadeInOut.cs" />
      <Compile Include="Assets\Scripts\BackToMenu.cs" />
      <Compile Include="Assets\Scripts\Done_RandomRotator.cs" />
      <Compile Include="Assets\Scripts\JumpGameController.cs" />
